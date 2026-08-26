@@ -28,7 +28,7 @@ bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
 
 """ Endpoint Functions """
-def register_user(database: Session, register_user_request: schemas.RegisterUserRequest) -> None:
+def register_user(database: Session, register_user_request: schemas.RegisterUserRequest):
     try:
         user = User(
             id=uuid4(),
@@ -61,6 +61,10 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return bcrypt_context.verify(plain_password, hashed_password)
 
 
+def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]) -> schemas.TokenData:
+    return verify_token(token)
+
+
 def authenticate_user(email: str, password: str, db: Session) -> User | bool:
     user = db.query(User).filter(User.email == email).first()
     if not user or not verify_password(password, user.password_hash):
@@ -76,3 +80,17 @@ def create_access_token(email: str, user_id: UUID, expires_delta: timedelta) -> 
         'exp': datetime.now(timezone.utc) + expires_delta
     }
     return jwt.encode(encode, JWT_SECRET_KEY, algorithm=ALGORITHM)
+
+
+def verify_token(token: str) -> schemas.TokenData:
+    try:
+        payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[ALGORITHM])
+        user_id: str = payload.get('id')
+        return schemas.TokenData(user_id=user_id)
+    except jwt.PyJWTError as e:
+        logging.warning(f"Token verification failed: {str(e)}")
+        raise AuthenticationError()
+
+
+""" Types """
+CurrentUser = Annotated[schemas.TokenData, Depends(get_current_user)]
