@@ -5,6 +5,7 @@ from fastapi.params import Depends
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, declarative_base, sessionmaker
 
+
 """ Set Enviroment Variables """
 load_dotenv()
 
