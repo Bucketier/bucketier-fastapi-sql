@@ -1,0 +1,6 @@
+-r requirements.txt
+pytest         # For testing FastAPI endpoints.
+pytest-asyncio # For testing FastAPI endpoints.
+httpx          # HTTP client for testing FastAPI endpoints.
+black          # Code formatting checker.
+ruff           # Code formatting checker.

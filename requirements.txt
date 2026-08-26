@@ -1,0 +1,12 @@
+fastapi
+uvicorn          # Runs the server.
+sqlalchemy       # Use this to interact with the database.
+alembic          # Tracks database changes like "add table", "create column".
+psycopg2-binary  # PostgreSQL database driver.
+slowapi          # FastAPI rate limiting by IP address.
+python-dotenv    # Environment variable file reader.
+pyjwt            # JSON Web Tokens for session authentication.
+passlib          # Password hashing library for python.
+bcrypt==4.0.1    # A specific password hashing for python.
+python-multipart # Handles file uploads and form data in FastAPI.
+email-validator  # Checks if a email is formatted correctly.
