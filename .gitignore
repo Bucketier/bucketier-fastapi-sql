@@ -4,6 +4,7 @@
 
 # local env files
 .env*.local
+.env
 
 # VS Code
 .vscode/
