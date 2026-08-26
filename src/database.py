@@ -11,6 +11,7 @@ load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL", default="sqlite:///./bucketier.db")
 
+
 """ Main """
 engine = create_engine(DATABASE_URL)
 

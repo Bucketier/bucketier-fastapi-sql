@@ -28,4 +28,5 @@ async def login_for_access_token(request: Request, # For the rate limiter to wor
                                  # Includes things like username and password.
                                  form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
                                  database: DatabaseSession):
+    """ Get access token from username and password. """
     return service.login_for_access_token(form_data, database)

@@ -1,4 +1,4 @@
-A FastAPI/PostgreSQL version of the bucketier backend which instead stores data indefinatley rather then temporaly. Would need modifications to the frontend for it to work, since this will be using authentication (jwt).
+A FastAPI/SQL version of the bucketier backend which instead stores data indefinatley rather then temporaly. Would need modifications to the frontend for it to work, since this will be using authentication (jwt).
 
 - FastAPI
 - PostgreSQL
