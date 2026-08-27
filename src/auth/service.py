@@ -34,8 +34,9 @@ def register_user(database: Session, register_user_request: schemas.RegisterUser
             id=uuid4(),
             email=register_user_request.email,
             username=register_user_request.username,
-            password_hash=get_password_hash(register_user_request.password)
+            hashed_password=get_password_hash(register_user_request.password)
         )
+        
         database.add(user)
         database.commit()
     except Exception as e:
@@ -67,7 +68,7 @@ def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]) -> schemas.T
 
 def authenticate_user(email: str, password: str, db: Session) -> User | bool:
     user = db.query(User).filter(User.email == email).first()
-    if not user or not verify_password(password, user.password_hash):
+    if not user or not verify_password(password, user.hashed_password):
         logging.warning(f"Failed authentication attempt for email: {email}")
         return False
     return user
